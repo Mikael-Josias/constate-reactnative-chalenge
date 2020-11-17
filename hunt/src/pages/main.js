@@ -4,19 +4,22 @@ import api from '../services/api';
 
 const Main: () => React$Node = props => {
 
-    const [counter, setCounter] = useState(0);
+    const [productInfo, setProductInfo] = useState({});
     const [docs, setDocs] = useState([]);
+    const [page, setPage] = useState(1);
 
     useEffect(() => {
-        loadProducts();
-    });
+        loadProducts(page);
+    }, []);
 
-    loadProducts = async () => {
-        const response = await api.get(`/products`);
+    loadProducts = async (page = 1) => {
+        const response = await api.get(`/products?page=${page}`);
     
-        const { docs } = response.data;
+        const { docs, ...productInfo } = response.data;
     
-        setDocs(docs);
+        setDocs(prevDocs => ([...prevDocs, ...docs]));
+        setProductInfo(productInfo);
+        setPage(page);
     };
 
     renderItem = ({ item }) => (
@@ -30,6 +33,14 @@ const Main: () => React$Node = props => {
         </View>
     );
 
+    loadMore = () => {
+        if(page === productInfo.pages) return;
+
+        const pageNumber = page + 1;
+
+        loadProducts(pageNumber);
+    };
+
     return (
         <View style={styles.container}>
             <FlatList
@@ -37,6 +48,8 @@ const Main: () => React$Node = props => {
                 data={docs}
                 keyExtractor={item => item._id}
                 renderItem={this.renderItem}
+                onEndReached={this.loadMore}
+                onEndReachedThreshold={0.1}
             />
         </View>
     );
