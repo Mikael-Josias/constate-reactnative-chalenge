@@ -27,7 +27,9 @@ const Main: () => React$Node = props => {
             <Text style={styles.productTitle}>{item.title}</Text>
             <Text style={styles.productDescription}>{item.description}</Text>
 
-            <TouchableOpacity onPress={() => {}} style={styles.productButton}>
+            <TouchableOpacity onPress={() => {
+                props.navigation.navigate('Products', {product: item});
+            }} style={styles.productButton}>
                 <Text style={styles.productButtonText}>Acessar!</Text>
             </TouchableOpacity>
         </View>
