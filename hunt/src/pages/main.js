@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 import api from '../services/api';
 
 const Main: () => React$Node = props => {
@@ -19,10 +19,24 @@ const Main: () => React$Node = props => {
         setDocs(docs);
     };
 
+    renderItem = ({ item }) => (
+        <View>
+            <Text>{item.title}</Text>
+            <Text>{item.description}</Text>
+
+            <TouchableOpacity onPress={() => {}}>
+                <Text>Acessar!</Text>
+            </TouchableOpacity>
+        </View>
+    );
+
     return (
         <View>
-            <Text>Página Main!</Text>
-            {docs.map(product => <Text key={product._id}>{product.title}</Text>)}
+            <FlatList
+                data={docs}
+                keyExtractor={item => item._id}
+                renderItem={this.renderItem}
+            />
         </View>
     );
 };
