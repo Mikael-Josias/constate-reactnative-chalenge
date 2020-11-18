@@ -1,6 +1,6 @@
 import { createStackNavigator } from 'react-navigation';
-import Main from './pages/main';
-import Products from './pages/products';
+import Main from './pages/Main/main';
+import Products from './pages/Products/products';
 
 export default createStackNavigator({
     Main,

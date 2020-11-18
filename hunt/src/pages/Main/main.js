@@ -1,49 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
-import api from '../services/api';
-import styled from 'styled-components';
-
-const Container = styled.View`
-    background-color: #fafafa;
-    flex: 1;
-`;
-const List = styled.FlatList`
-    padding: 20px;
-`;
-const ProductContainer = styled.View`
-    background-Color: #fff;
-    border-width: 1;
-    border-color: #ddd;
-    border-radius: 5px;
-    padding: 20px;
-    margin-bottom: 20px;
-`;
-const ProductTitle = styled.Text`
-    font-Size: 18px;
-    font-Weight: bold;
-    color: #333;
-`;
-const ProductDescription = styled.Text`
-    font-Size: 16px;
-    color: #999;
-    margin-Top: 5px;
-    line-Height: 24px;
-`;
-const ProductButton = styled.TouchableOpacity`
-    justifyContent: center;
-    align-Items: center;
-    height: 42px;
-    border-Radius: 5px;
-    border-Width: 2px;
-    border-Color: #da552f;
-    background-Color: transparent;
-`;
-const ProductButtonText = styled.Text`
-    font-Size: 16px;
-    color: #da552f;
-`;
-
-
+import api from '../../services/api';
+import  {
+    Container, 
+    List, 
+    ProductContainer, 
+    ProductTitle, 
+    ProductDescription, 
+    ProductButton, 
+    ProductButtonText } from  './styles';
 
 const Main: () => React$Node = props => {
 
@@ -55,7 +19,7 @@ const Main: () => React$Node = props => {
         loadProducts(page);
     }, []);
 
-    loadProducts = async (page = 1) => {
+    const loadProducts = async (page = 1) => {
         const response = await api.get(`/products?page=${page}`);
     
         const { docs, ...productInfo } = response.data;
@@ -65,7 +29,7 @@ const Main: () => React$Node = props => {
         setPage(page);
     };
 
-    renderItem = ({ item }) => (
+    const renderItem = ({ item }) => (
         <ProductContainer>
             <ProductTitle>{item.title}</ProductTitle>
             <ProductDescription>{item.description}</ProductDescription>
@@ -78,7 +42,7 @@ const Main: () => React$Node = props => {
         </ProductContainer>
     );
 
-    loadMore = () => {
+    const loadMore = () => {
         if(page === productInfo.pages) return;
 
         const pageNumber = page + 1;
