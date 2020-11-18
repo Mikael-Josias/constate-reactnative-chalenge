@@ -14,7 +14,8 @@
     "react": "16.13.1",
     "react-native": "0.63.3",
     "react-native-webview": "^10.10.2",
-    "react-navigation": "2.18.3"
+    "react-navigation": "2.18.3",
+    "styled-components": "^5.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
@@ -28,5 +29,8 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "resolutions": {
+    "styled-components": "^5"
   }
 }

@@ -1,6 +1,49 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import api from '../services/api';
+import styled from 'styled-components';
+
+const Container = styled.View`
+    background-color: #fafafa;
+    flex: 1;
+`;
+const List = styled.FlatList`
+    padding: 20px;
+`;
+const ProductContainer = styled.View`
+    background-Color: #fff;
+    border-width: 1;
+    border-color: #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+`;
+const ProductTitle = styled.Text`
+    font-Size: 18px;
+    font-Weight: bold;
+    color: #333;
+`;
+const ProductDescription = styled.Text`
+    font-Size: 16px;
+    color: #999;
+    margin-Top: 5px;
+    line-Height: 24px;
+`;
+const ProductButton = styled.TouchableOpacity`
+    justifyContent: center;
+    align-Items: center;
+    height: 42px;
+    border-Radius: 5px;
+    border-Width: 2px;
+    border-Color: #da552f;
+    background-Color: transparent;
+`;
+const ProductButtonText = styled.Text`
+    font-Size: 16px;
+    color: #da552f;
+`;
+
+
 
 const Main: () => React$Node = props => {
 
@@ -23,16 +66,16 @@ const Main: () => React$Node = props => {
     };
 
     renderItem = ({ item }) => (
-        <View style={styles.productContainer}>
-            <Text style={styles.productTitle}>{item.title}</Text>
-            <Text style={styles.productDescription}>{item.description}</Text>
+        <ProductContainer>
+            <ProductTitle>{item.title}</ProductTitle>
+            <ProductDescription>{item.description}</ProductDescription>
 
-            <TouchableOpacity onPress={() => {
+            <ProductButton onPress={() => {
                 props.navigation.navigate('Products', {product: item});
-            }} style={styles.productButton}>
-                <Text style={styles.productButtonText}>Acessar!</Text>
-            </TouchableOpacity>
-        </View>
+            }}>
+                <ProductButtonText>Acessar!</ProductButtonText>
+            </ProductButton>
+        </ProductContainer>
     );
 
     loadMore = () => {
@@ -44,16 +87,15 @@ const Main: () => React$Node = props => {
     };
 
     return (
-        <View style={styles.container}>
-            <FlatList
-                contentContainerStyle={styles.list}
+        <Container>
+            <List
                 data={docs}
                 keyExtractor={item => item._id}
-                renderItem={this.renderItem}
-                onEndReached={this.loadMore}
+                renderItem={renderItem}
+                onEndReached={loadMore}
                 onEndReachedThreshold={0.1}
             />
-        </View>
+        </Container>
     );
 };
 
@@ -61,49 +103,5 @@ Main['navigationOptions'] = screenProps => ({
     title: 'JSHunt'
 });
 
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: "#fafafa",
-        flex: 1,
-
-    },
-    list: {
-        padding: 20,
-
-    },
-    productContainer: {
-        backgroundColor: "#fff",
-        borderWidth: 1,
-        borderColor: "#ddd",
-        borderRadius: 5,
-        padding: 20,
-        marginBottom: 20,
-
-    },
-    productTitle: {
-        fontSize: 18,
-        fontWeight: "bold",
-        color: "#333",
-    },
-    productDescription: {
-        fontSize: 16,
-        color: "#999",
-        marginTop: 5,
-        lineHeight: 24,
-    },
-    productButton: {
-        justifyContent: "center",
-        alignItems: "center",
-        height: 42,
-        borderRadius: 5,
-        borderWidth: 2,
-        borderColor: "#da552f",
-        backgroundColor: "transparent",
-    },
-    productButtonText: {
-        fontSize: 16,
-        color: "#da552f",
-    },
-});
 
 export default Main;
